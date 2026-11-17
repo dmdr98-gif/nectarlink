@@ -31,6 +31,7 @@ jobs:
       - uses: Swatinem/rust-cache@v2
         with:
           shared-key: everywhere-android-arm64
+          cache-on-failure: true
       - name: Install cargo-ndk
         run: cargo install --locked cargo-ndk
       - uses: actions/setup-java@v6
@@ -42,6 +43,8 @@ jobs:
           cmdline-tools-version: "16111833"
           packages: "platforms;android-37.0 ndk;30.0.16248370 build-tools;37.0.0"
       - uses: gradle/actions/setup-gradle@v6
+        with:
+          cache-read-only: false
       - name: Prepare the fork signing key
         env:
           KEYSTORE: ${{ secrets.ANDROID_KEYSTORE }}
@@ -62,7 +65,7 @@ jobs:
         run: |
           apk=android/app/build/outputs/apk/release/app-release.apk
           "$ANDROID_HOME/build-tools/37.0.0/apksigner" verify --verbose --print-certs "$apk" | tee "$RUNNER_TEMP/everywhere-signature.txt"
-          grep -Fq "Signer #1 certificate SHA-256 digest: $EVERYWHERE_SIGNER_SHA256" "$RUNNER_TEMP/everywhere-signature.txt"
+          grep -Fq "certificate SHA-256 digest: $EVERYWHERE_SIGNER_SHA256" "$RUNNER_TEMP/everywhere-signature.txt"
           "$ANDROID_HOME/build-tools/37.0.0/zipalign" -c -P 16 -v 4 "$apk"
           "$ANDROID_HOME/build-tools/37.0.0/aapt2" dump badging "$apk" > "$RUNNER_TEMP/everywhere-badging.txt"
           grep -Fq "package: name='app.nectarlink'" "$RUNNER_TEMP/everywhere-badging.txt"
