@@ -293,7 +293,7 @@ class AppDisplay(
                 Int::class.javaPrimitiveType,
                 Surface::class.java,
             )
-            val vd = m.invoke(null, "NectarlinkScreen", w, h, 0, surface) as? VirtualDisplay
+            val vd = m.invoke(null, "EverywhereScreen", w, h, 0, surface) as? VirtualDisplay
             if (vd != null) return vd
         }
         // 2. Shell DisplayManager instance with VIRTUAL_DISPLAY_FLAG_AUTO_MIRROR
@@ -303,7 +303,7 @@ class AppDisplay(
         @SuppressLint("WrongConstant")
         return runCatching {
             manager.createVirtualDisplay(
-                "NectarlinkScreen",
+                "EverywhereScreen",
                 w,
                 h,
                 d,
@@ -312,7 +312,7 @@ class AppDisplay(
             )
         }.getOrElse {
             manager.createVirtualDisplay(
-                "NectarlinkScreen",
+                "EverywhereScreen",
                 w,
                 h,
                 d,
@@ -353,7 +353,7 @@ class AppDisplay(
         // Some of the flags are hidden ones (TRUSTED, OWN_FOCUS...), which
         // the shell may use.
         @SuppressLint("WrongConstant")
-        return manager.createVirtualDisplay("Nectarlink", w, h, d, surface, flags)
+        return manager.createVirtualDisplay("Everywhere", w, h, d, surface, flags)
     }
 
     /**
@@ -364,7 +364,7 @@ class AppDisplay(
     private fun ownedDisplay(w: Int, h: Int, d: Int, surface: Surface, flags: Int): VirtualDisplay? {
         val owner = VirtualDevice.create() ?: return null
         return runCatching {
-            owner.createVirtualDisplay("Nectarlink", w, h, d, surface, flags and OWN_DISPLAY_GROUP.inv())
+            owner.createVirtualDisplay("Everywhere", w, h, d, surface, flags and OWN_DISPLAY_GROUP.inv())
         }.onSuccess { device = owner }.onFailure {
             System.err.println("no display on the virtual device: $it")
             owner.close()

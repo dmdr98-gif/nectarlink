@@ -285,31 +285,16 @@ class ShizukuShell(context: Context) : Binder() {
 /** What [ShizukuShell] accepts, as plain functions so they're unit-tested. */
 object ShizukuShellRules {
     private val TOKEN = Regex("[0-9a-f]{48}")
-    private val PACKAGE = Regex("[A-Za-z][A-Za-z0-9_]*(\\.[A-Za-z][A-Za-z0-9_]*)+")
-    private val OP = Regex("[A-Z][A-Z0-9_]*")
-    private val PERMISSION = Regex("android\\.permission\\.[A-Z][A-Z0-9_]*")
-    private val COMPONENT = Regex("${PACKAGE.pattern}/${PACKAGE.pattern}")
 
     /** A token [Elevated] makes: 24 random bytes in hex. */
     fun isToken(token: String) = TOKEN.matches(token)
 
     /**
      * One of the grants [Elevated] runs before the helper starts, for
-     * NectarLink's own package and nothing else: `pm grant`, `appops set …
-     * allow` and `cmd notification allow_listener|allow_dnd`.
+     * this app's own package and the exact privileges its enabled features use.
      */
-    fun isGrant(command: String): Boolean {
-        val w = words(command)
-        val own = app.nectarlink.android.BuildConfig.APPLICATION_ID
-        return when {
-            w.size == 4 && w[0] == "pm" && w[1] == "grant" -> w[2] == own && PERMISSION.matches(w[3])
-            w.size == 5 && w[0] == "appops" && w[1] == "set" && w[4] == "allow" -> w[2] == own && OP.matches(w[3])
-            w.size == 4 && w[0] == "cmd" && w[1] == "notification" && w[2] == "allow_dnd" -> w[3] == own
-            w.size == 4 && w[0] == "cmd" && w[1] == "notification" && w[2] == "allow_listener" ->
-                COMPONENT.matches(w[3]) && w[3].substringBefore('/') == own
-            else -> false
-        }
-    }
+    fun isGrant(command: String): Boolean =
+        ElevatedGrantPolicy.isGrant(command, app.nectarlink.android.BuildConfig.APPLICATION_ID)
 
     fun words(command: String): List<String> = command.trim().split(Regex("\\s+")).filter(String::isNotEmpty)
 

@@ -91,8 +91,6 @@ object InputServer {
         } else {
             rawArg
         }
-        grantAppOps()
-        startClipboardWatcher()
         // No window is open yet: an association left by a helper that was killed goes.
         Thread { VirtualDevice.forget() }.start()
         val injector = runCatching { Injector() }.getOrElse { return fail("can't inject input: $it") }
@@ -129,37 +127,6 @@ object InputServer {
         }
     }
 
-    private fun grantAppOps() {
-        val commands = buildList {
-            add(arrayOf("pm", "grant", PKG, "android.permission.WRITE_SECURE_SETTINGS"))
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
-                add(arrayOf("appops", "set", PKG, "MANAGE_ONGOING_CALLS", "allow"))
-            }
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.VANILLA_ICE_CREAM) {
-                add(arrayOf("appops", "set", PKG, "RECEIVE_SENSITIVE_NOTIFICATIONS", "allow"))
-            }
-            add(arrayOf("cmd", "notification", "allow_dnd", PKG))
-            add(arrayOf("appops", "set", PKG, "WRITE_SETTINGS", "allow"))
-            add(arrayOf("appops", "set", PKG, "READ_CLIPBOARD_IN_BACKGROUND", "allow"))
-            add(arrayOf("appops", "set", PKG, "PROJECT_MEDIA", "allow"))
-        }
-        for (cmd in commands) {
-            runCatching { Runtime.getRuntime().exec(cmd).waitFor() }
-        }
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.VANILLA_ICE_CREAM) {
-            runCatching {
-                val proc = Runtime.getRuntime().exec(arrayOf("settings", "get", "secure", "enabled_notification_listeners"))
-                val enabled = proc.inputStream.bufferedReader().readText()
-                proc.waitFor()
-                if (enabled.contains("$PKG/")) {
-                    Runtime.getRuntime().exec(
-                        arrayOf("cmd", "notification", "allow_listener", "$PKG/app.nectarlink.android.notifications.NotificationListener"),
-                    ).waitFor()
-                }
-            }
-        }
-    }
-
     @Volatile private var clipListenerProxy: Any? = null
 
     /** The clipboard service and its setPrimaryClip, once the watcher found them. */
@@ -180,7 +147,7 @@ object InputServer {
             val clip = get.invoke(service, *buildClipboardArgs(get.parameterTypes, null, null))
                 as? android.content.ClipData ?: return
             if (clip.itemCount == 0 || clip.getItemAt(0).text?.toString() != text) return
-            val empty = android.content.ClipData.newPlainText("Nectarlink", "")
+            val empty = android.content.ClipData.newPlainText("Everywhere", "")
             set.invoke(service, *buildClipboardArgs(set.parameterTypes, null, empty))
         }.onFailure { System.err.println("can't clear the clipboard: $it") }
     }
@@ -193,9 +160,9 @@ object InputServer {
             val text = decode(parts[0])
             val html = parts.getOrNull(1)?.takeIf(String::isNotEmpty)?.let(decode)
             val clip = if (html != null) {
-                android.content.ClipData.newHtmlText("Nectarlink", text, html)
+                android.content.ClipData.newHtmlText("Everywhere", text, html)
             } else {
-                android.content.ClipData.newPlainText("Nectarlink", text)
+                android.content.ClipData.newPlainText("Everywhere", text)
             }
             clip.description.extras = android.os.PersistableBundle().apply {
                 putBoolean("com.android.systemui.SUPPRESS_CLIPBOARD_OVERLAY", true)
@@ -207,7 +174,9 @@ object InputServer {
     }
 
     @android.annotation.SuppressLint("PrivateApi", "DiscouragedPrivateApi")
+    @Synchronized
     private fun startClipboardWatcher() {
+        if (clipListenerProxy != null) return
         runCatching {
             val sm = Class.forName("android.os.ServiceManager")
             val binder = sm.getMethod("getService", String::class.java).invoke(null, "clipboard") as? android.os.IBinder ?: return
@@ -246,8 +215,8 @@ object InputServer {
                 }
             }
             proxyRef = proxy
-            clipListenerProxy = proxy
             addMethod.invoke(clipboard, *buildClipboardArgs(addMethod.parameterTypes, proxy, null))
+            clipListenerProxy = proxy
         }.onFailure {
             System.err.println("clipboard watcher unavailable: $it")
         }
@@ -295,7 +264,7 @@ object InputServer {
                     extras?.getBoolean("com.android.systemui.SUPPRESS_CLIPBOARD_OVERLAY") == true ||
                     extras?.getBoolean("android.content.extra.IS_REMOTE_DEVICE") == true
                 val isSensitive = extras?.getBoolean("android.content.extra.IS_SENSITIVE") == true
-                if (isHostPipe || label == "Nectarlink") {
+                if (isHostPipe || label == "Everywhere" || label == "Nectarlink") {
                     lastSentClipKey = null
                     return@runCatching
                 }
@@ -380,6 +349,8 @@ object InputServer {
             val writer = java.io.OutputStreamWriter(client.getOutputStream(), Charsets.UTF_8)
             controlOut = writer
             blockedReported = false
+            // A helper started from adb must not read clips before the app authenticates.
+            startClipboardWatcher()
             try {
                 var line: String? = if (first == "H") runCatching { reader.nextLine(MAX_LINE_CHARS) }.getOrNull() else first
                 while (line != null) {
@@ -802,6 +773,14 @@ object InputServer {
                         COMPILE_APP_COMMAND -> Thread { runCatching { Runtime.getRuntime().exec(rest.split(' ').toTypedArray()).waitFor() } }.start()
                         else -> Runtime.getRuntime().exec(rest.split(' ').toTypedArray()).waitFor()
                     }
+                    if (ElevatedGrantPolicy.isGrant(rest, PKG)) {
+                        controlOut?.let { out ->
+                            synchronized(out) {
+                                out.write("GRANTS_CHANGED\n")
+                                out.flush()
+                            }
+                        }
+                    }
                 }
                 "P" -> if (display < 0) setDisplayPower(rest.trim() != "0")
                 "B" -> if (display < 0) setClipboard(rest)
@@ -1022,6 +1001,7 @@ object InputServer {
         }
 
         private fun allowedCommand(cmd: String): Boolean {
+            if (ElevatedGrantPolicy.isGrant(cmd, PKG)) return true
             if (cmd in allowed) return true
             if (cmd.startsWith(BRIGHTNESS_PREFIX)) {
                 val v = cmd.removePrefix(BRIGHTNESS_PREFIX).toIntOrNull()
@@ -1041,8 +1021,6 @@ object InputServer {
             "hotspot off",
             "cmd wifi start-softap",
             "cmd wifi stop-softap",
-            // Pause for banking apps: seeing which app is in front.
-            "appops set $PKG GET_USAGE_STATS allow",
             // Fast starts right after an install or update.
             COMPILE_APP_COMMAND,
             // Start without asking: the camera or microphone a chosen PC asked for.
@@ -1170,7 +1148,7 @@ object InputServer {
         fun sendGamepadReport(buttons: Int, lx: Int, ly: Int, rx: Int, ry: Int, lt: Int, rt: Int): Boolean {
             if (!gamepadAttempted) {
                 gamepadAttempted = true
-                gamepadFd = openDevice("NectarLink Virtual Gamepad", 0x4EE8, GAMEPAD_RD)
+                gamepadFd = openDevice("Everywhere Virtual Gamepad", 0x4EE8, GAMEPAD_RD)
             }
             val fd = gamepadFd ?: return false
             val report = java.nio.ByteBuffer.allocate(12).order(java.nio.ByteOrder.LITTLE_ENDIAN).apply {

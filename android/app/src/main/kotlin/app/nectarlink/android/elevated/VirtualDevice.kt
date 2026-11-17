@@ -93,7 +93,7 @@ internal class VirtualDevice private constructor(private val device: Any) {
             val paramsType = Class.forName("android.companion.virtual.VirtualDeviceParams")
             val builderType = Class.forName("android.companion.virtual.VirtualDeviceParams\$Builder")
             val builder = builderType.getConstructor().newInstance()
-            builderType.getMethod("setName", String::class.java).invoke(builder, "Nectarlink")
+            builderType.getMethod("setName", String::class.java).invoke(builder, "Everywhere")
             builderType.getMethod("setLockState", Int::class.javaPrimitiveType).invoke(builder, LOCK_STATE_ALWAYS_UNLOCKED)
             val params = builderType.getMethod("build").invoke(builder)
             val device = managerType.getMethod("createVirtualDevice", Int::class.javaPrimitiveType, paramsType)

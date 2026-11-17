@@ -24,8 +24,8 @@ class ShizukuShellRulesTest {
         listOf(
             "pm grant $own android.permission.WRITE_SECURE_SETTINGS",
             "appops set $own GET_USAGE_STATS allow",
-            "appops set $own WRITE_SETTINGS allow",
-            "cmd notification allow_dnd $own",
+            "appops set $own MANAGE_ONGOING_CALLS allow",
+            "appops set $own RECEIVE_SENSITIVE_NOTIFICATIONS allow",
             "cmd notification allow_listener $own/app.nectarlink.android.notifications.NotificationListener",
         ).forEach { assertTrue(it, ShizukuShellRules.isGrant(it)) }
     }
@@ -39,6 +39,13 @@ class ShizukuShellRulesTest {
             "appops set com.example.other GET_USAGE_STATS allow",
             "cmd notification allow_listener com.example.other/$own.Listener",
             "cmd notification allow_dnd com.example.other",
+            "cmd notification allow_dnd $own",
+            "appops set $own WRITE_SETTINGS allow",
+            "appops set $own PROJECT_MEDIA allow",
+            "appops set $own READ_CLIPBOARD_IN_BACKGROUND allow",
+            "pm grant $own android.permission.READ_SMS",
+            "appops set $own READ_SMS allow",
+            "cmd notification allow_listener $own/com.example.OtherListener",
             "pm uninstall $own",
             "reboot",
             "",

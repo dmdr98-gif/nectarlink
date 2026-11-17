@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- SPDX-License-Identifier: GPL-3.0-or-later -->
 <resources>
-    <string name="app_name">NectarLink</string>
+    <string name="app_name">Everywhere</string>
 
     <!-- Pairing -->
     <string name="pair_title">Parear com o PC</string>
     <string name="pair_show_title">Parear um celular ou tablet</string>
-    <string name="pair_show_hint">No outro celular ou tablet, abra o NectarLink, toque em Parear e escaneie este código.</string>
+    <string name="pair_show_hint">No outro celular ou tablet, abra o Everywhere, toque em Parear e escaneie este código.</string>
     <string name="pair_show_qr_desc">Código de pareamento para outro celular ou tablet</string>
     <string name="action_show_code">Parear um celular ou tablet</string>
-    <string name="pair_scan_hint">No PC, abra o NectarLink e aponte a câmera para o código exibido. No outro celular ou tablet, o código aparece em Parear um celular ou tablet.</string>
+    <string name="pair_scan_hint">No PC, abra o Everywhere e aponte a câmera para o código exibido. No outro celular ou tablet, o código aparece em Parear um celular ou tablet.</string>
     <string name="pair_nearby_title">Parear com um dispositivo próximo</string>
-    <string name="pair_nearby_hint">Abra o NectarLink no PC e deixe a tela de pareamento aberta. Ele vai aparecer aqui.</string>
+    <string name="pair_nearby_hint">Abra o Everywhere no PC e deixe a tela de pareamento aberta. Ele vai aparecer aqui.</string>
     <string name="pair_looking">Procurando PCs…</string>
     <string name="pair_joining">Pareando…</string>
     <string name="pair_connecting">Conectando a %1$s…</string>
@@ -25,9 +25,9 @@
     <string name="pair_failed_declined">Um dos dispositivos recusou o pareamento.</string>
     <string name="pair_failed_expired">O código expirou. Gere outro no PC.</string>
     <string name="pair_failed_unreachable">Não foi possível acessar o PC. Confira se os dois estão na mesma rede.</string>
-    <string name="pair_failed_other">Esse não é um código de pareamento do NectarLink ou algo deu errado.</string>
+    <string name="pair_failed_other">Esse não é um código de pareamento do Everywhere ou algo deu errado.</string>
     <string name="your_pc">seu PC</string>
-    <string name="camera_permission_needed">O NectarLink precisa acessar a câmera para ler o código de pareamento. Nada é gravado.</string>
+    <string name="camera_permission_needed">O Everywhere precisa acessar a câmera para ler o código de pareamento. Nada é gravado.</string>
 
     <!-- Home -->
     <string name="home_title">Início</string>
@@ -62,7 +62,7 @@
     <string name="settings_notifications">Notificações</string>
     <string name="notifications_title">Mostrar notificações no PC</string>
     <string name="notifications_on">Ativado. As notificações aparecem nos PCs pareados. Você pode responder ou dispensá-las por lá.</string>
-    <string name="notifications_off">O NectarLink precisa do Acesso a notificações para mostrar no PC as notificações deste celular.</string>
+    <string name="notifications_off">O Everywhere precisa do Acesso a notificações para mostrar no PC as notificações deste celular.</string>
     <string name="notifications_restricted">A opção está desativada? Abra Informações do app, toque em ⋮, escolha “Permitir configurações restritas” e tente de novo.</string>
     <string name="action_allow">Permitir</string>
     <string name="clip_share_label">Enviar para PC</string>
@@ -76,12 +76,12 @@
     <string name="media_previous">Anterior</string>
     <string name="action_send_files">Enviar arquivos</string>
     <string name="action_send_folder">Enviar uma pasta</string>
-    <string name="input_service_label">NectarLink: controle pelo PC</string>
+    <string name="input_service_label">Everywhere: controle pelo PC</string>
     <string name="input_service_description">Permite que o mouse e o teclado do PC toquem, deslizem e digitem neste celular enquanto você compartilha a tela com um PC pareado. Ele não lê mais nada.</string>
     <string name="settings_control">Controle pelo PC</string>
     <string name="control_title">Usar o mouse e o teclado do PC</string>
     <string name="control_on">Ativado. Com a tela do celular espelhada no PC, você pode tocar, deslizar e digitar por lá.</string>
-    <string name="control_off">Toque, deslize e digite pelo PC enquanto ele mostra esta tela. Ative o NectarLink em Acessibilidade.</string>
+    <string name="control_off">Toque, deslize e digite pelo PC enquanto ele mostra esta tela. Ative o Everywhere em Acessibilidade.</string>
     <string name="dnd_access_title">Não perturbe e modo silencioso</string>
     <string name="dnd_access_on">Ativado. O PC pode ativar ou desativar o Não perturbe e silenciar o toque do celular.</string>
     <string name="dnd_access_off">Permita que o PC ative ou desative o Não perturbe e silencie o toque do celular.</string>
@@ -89,34 +89,35 @@
     <string name="write_settings_on">Ativado: o PC pode ajustar o brilho da tela deste celular.</string>
     <string name="write_settings_off">Permita que o PC ajuste o brilho da tela deste celular.</string>
     <string name="local_network_title">Acessar o PC nesta rede</string>
-    <string name="local_network_text">O Android pede sua autorização antes de um app se comunicar com dispositivos da rede. O NectarLink precisa dessa permissão para acessar seu PC.</string>
+    <string name="local_network_text">O Android pede sua autorização antes de um app se comunicar com dispositivos da rede. O Everywhere precisa dessa permissão para acessar seu PC.</string>
     <string name="channel_elevated">Configuração da depuração por Wi-Fi</string>
     <string name="elevated_title">Elevated</string>
+    <string name="elevated_permissions_notice">O Elevated permite que PCs pareados controlem este celular e sincronizem sua área de transferência em segundo plano. Com o acesso às notificações ativado, notificações com códigos de uso único também podem chegar a esses PCs. Os controles de chamadas e a pausa para apps bancários usam as permissões das funções que você ativar.</string>
     <string name="elevated_not_set_up">Toque em tempo real, todas as teclas e, nas chamadas, silenciar, colocar em espera e teclado numérico pelo PC.</string>
     <string name="elevated_waiting">Aguardando a depuração por Wi-Fi. Ative nas Opções do desenvolvedor.</string>
     <string name="elevated_starting">Iniciando…</string>
     <string name="elevated_running">Ativado: o mouse e o teclado do PC funcionam como uma tela touch e um teclado de verdade.</string>
     <string name="elevated_failed">Não foi possível iniciar. Confira se a depuração por Wi-Fi está ativada e tente de novo.</string>
-    <string name="elevated_not_paired">O celular esqueceu o pareamento do NectarLink. Configure de novo.</string>
+    <string name="elevated_not_paired">O celular esqueceu o pareamento do Everywhere. Configure de novo.</string>
     <string name="elevated_start_with">Iniciar com</string>
     <string name="elevated_method_wireless">Wi-Fi</string>
     <string name="elevated_set_up">Configurar</string>
     <string name="elevated_root_hint">Este celular tem root, então o Elevated pode ser iniciado pelo root: sem pareamento, e ele volta sozinho depois de reiniciar ou fora do Wi-Fi. As permissões são as mesmas da depuração por Wi-Fi.</string>
     <string name="elevated_running_root">Ativado pelo root: o mouse e o teclado do PC funcionam como uma tela touch e um teclado de verdade.</string>
-    <string name="elevated_root_failed">O root não foi permitido, ou o seu gerenciador de root não consegue iniciar o auxiliar do NectarLink como usuário shell. No KernelSU ou APatch, adicione o NectarLink à lista de Superusuário primeiro e tente de novo. Ou configure pela depuração por Wi-Fi.</string>
+    <string name="elevated_root_failed">O root não foi permitido, ou o seu gerenciador de root não consegue iniciar o auxiliar do Everywhere como usuário shell. No KernelSU ou APatch, adicione o Everywhere à lista de Superusuário primeiro e tente de novo. Ou configure pela depuração por Wi-Fi.</string>
     <string name="elevated_shizuku_hint">O Shizuku está instalado, então o Elevated pode ser iniciado por ele: sem pareamento próprio, e continua funcionando fora do Wi-Fi enquanto o Shizuku estiver rodando. As permissões são as mesmas da depuração por Wi-Fi.</string>
     <string name="elevated_running_shizuku">Ativado pelo Shizuku: o mouse e o teclado do PC funcionam como uma tela touch e um teclado de verdade.</string>
-    <string name="elevated_shizuku_waiting">Aguardando o Shizuku. Inicie-o no app Shizuku e abra o NectarLink.</string>
+    <string name="elevated_shizuku_waiting">Aguardando o Shizuku. Inicie-o no app Shizuku e abra o Everywhere.</string>
     <string name="elevated_shizuku_not_running">O Shizuku não está em execução. Inicie-o no app Shizuku e tente de novo.</string>
-    <string name="elevated_shizuku_denied">O Shizuku não autorizou o NectarLink. Permita o acesso no Shizuku (e atualize o app se estiver desatualizado) e tente de novo.</string>
+    <string name="elevated_shizuku_denied">O Shizuku não autorizou o Everywhere. Permita o acesso no Shizuku (e atualize o app se estiver desatualizado) e tente de novo.</string>
     <string name="elevated_shizuku_root">O Shizuku está rodando com root, e o Elevated só inicia o auxiliar como usuário shell. Inicie o Shizuku pela depuração por Wi-Fi ou use root.</string>
     <string name="elevated_open_shizuku">Abrir Shizuku</string>
     <string name="elevated_turn_off">Desligar</string>
     <string name="elevated_try_again">Tentar de novo</string>
     <string name="elevated_steps_title">Configurar a depuração por Wi-Fi</string>
-    <string name="elevated_steps">Códigos de uso único em notificações que o Android esconde por serem sensíveis também chegam ao PC.\n\n1. Ative as Opções do desenvolvedor: em Configurações › Sobre o telefone, toque 7 vezes em Número da versão.\n2. Em Opções do desenvolvedor, ative a Depuração por Wi-Fi (conectado a um Wi-Fi), abra a opção e toque em Parear o dispositivo com um código de pareamento.\n3. Digite o código de 6 dígitos na notificação do NectarLink, sem fechar a janela do código.</string>
+    <string name="elevated_steps">Códigos de uso único em notificações que o Android esconde por serem sensíveis também chegam ao PC.\n\n1. Ative as Opções do desenvolvedor: em Configurações › Sobre o telefone, toque 7 vezes em Número da versão.\n2. Em Opções do desenvolvedor, ative a Depuração por Wi-Fi (conectado a um Wi-Fi), abra a opção e toque em Parear o dispositivo com um código de pareamento.\n3. Digite o código de 6 dígitos na notificação do Everywhere, sem fechar a janela do código.</string>
     <string name="elevated_open_developer">Abrir as Opções do desenvolvedor</string>
-    <string name="elevated_pair_title">Parear o NectarLink pela depuração por Wi-Fi</string>
+    <string name="elevated_pair_title">Parear o Everywhere pela depuração por Wi-Fi</string>
     <string name="elevated_pair_text">Em Depuração por Wi-Fi, toque em Parear o dispositivo com um código de pareamento e digite o código aqui.</string>
     <string name="elevated_pair_action">Digitar código</string>
     <string name="elevated_pair_collapsed">Deslize esta notificação para baixo e toque em Digitar código.</string>
@@ -163,7 +164,7 @@
     <string name="transfer_pause">Pausar</string>
     <string name="transfer_resume">Retomar</string>
     <string name="transfer_paused_progress">Pausado · %1$s / %2$s</string>
-    <string name="transfer_received_from">De %1$s · em Download/Nectarlink</string>
+    <string name="transfer_received_from">De %1$s · em Download/Everywhere</string>
     <string name="transfer_sent_to">Enviado para %1$s</string>
     <string name="transfer_cancelled">Cancelado</string>
     <string name="transfer_denied">%1$s não aceita arquivos deste celular.</string>
@@ -184,7 +185,7 @@
     <string name="clip_empty">Não há texto nem imagem na área de transferência.</string>
     <string name="clip_image_too_large">Essa imagem é muito grande para enviar.</string>
     <string name="clip_image_unreadable">Essa imagem não pode ser lida.</string>
-    <string name="clip_image_unsupported">Atualize o NectarLink em %1$s para enviar imagens.</string>
+    <string name="clip_image_unsupported">Atualize o Everywhere em %1$s para enviar imagens.</string>
     <string name="clip_nothing_shared">Não há texto para enviar.</string>
     <string name="clipboard_history_title">Histórico da área de transferência</string>
     <string name="clipboard_history_subtitle">Os últimos 50 itens trocados com seus PCs, guardados com criptografia neste celular.</string>
@@ -214,20 +215,20 @@
     <string name="clip_action_track">Rastrear</string>
     <string name="clip_action_email">E-mail</string>
     <string name="background_title">Continue conectado em segundo plano</string>
-    <string name="background_text">O Android está pausando o NectarLink para economizar bateria, então o PC não consegue se conectar. Permita que o app continue em segundo plano.</string>
+    <string name="background_text">O Android está pausando o Everywhere para economizar bateria, então o PC não consegue se conectar. Permita que o app continue em segundo plano.</string>
     <string name="background_on">Pode ficar conectado em segundo plano</string>
     <string name="settings_background_title">Segundo plano e bateria</string>
     <string name="settings_run_in_background">Manter em segundo plano</string>
-    <string name="settings_run_in_background_hint">Mantém este celular acessível pelo PC. Se desativar, o NectarLink só se conecta enquanto estiver aberto e a notificação desaparece.</string>
+    <string name="settings_run_in_background_hint">Mantém este celular acessível pelo PC. Se desativar, o Everywhere só se conecta enquanto estiver aberto e a notificação desaparece.</string>
     <string name="home_background_off_title">Conexão em segundo plano desativada</string>
-    <string name="home_background_off_text">O NectarLink só se conecta enquanto o app está aberto. Ative esta opção para manter o celular acessível pelo PC.</string>
+    <string name="home_background_off_text">O Everywhere só se conecta enquanto o app está aberto. Ative esta opção para manter o celular acessível pelo PC.</string>
     <string name="battery_open_oem_settings">Configurações de bateria</string>
-    <string name="battery_guide_samsung">Em celulares Samsung: abra Informações do app › Bateria › selecione Sem restrições e, em Assistência do aparelho › Bateria › Limites de uso em segundo plano, confira se o NectarLink nunca é suspenso.</string>
-    <string name="battery_guide_xiaomi">Em celulares Xiaomi / HyperOS / MIUI: ative a Inicialização automática do NectarLink. Em Informações do app › Economia de bateria, selecione Sem restrições.</string>
+    <string name="battery_guide_samsung">Em celulares Samsung: abra Informações do app › Bateria › selecione Sem restrições e, em Assistência do aparelho › Bateria › Limites de uso em segundo plano, confira se o Everywhere nunca é suspenso.</string>
+    <string name="battery_guide_xiaomi">Em celulares Xiaomi / HyperOS / MIUI: ative a Inicialização automática do Everywhere. Em Informações do app › Economia de bateria, selecione Sem restrições.</string>
     <string name="battery_guide_oneplus">Em celulares OnePlus / OxygenOS: abra Informações do app › Uso da bateria › ative Permitir atividade em segundo plano e Permitir inicialização automática.</string>
     <string name="battery_guide_oppo_realme">Em celulares Oppo / Realme: abra Informações do app › Uso da bateria › ative Permitir atividade em segundo plano e Permitir inicialização automática.</string>
     <string name="battery_guide_vivo">Em celulares Vivo / Funtouch / OriginOS: abra Informações do app › Bateria › selecione Sem restrições (alto consumo de bateria em segundo plano) e permita a inicialização automática.</string>
-    <string name="battery_guide_huawei">Em celulares Huawei / Honor: abra Inicialização de apps (Gerenciador do telefone) › desative Gerenciar automaticamente para o NectarLink e mantenha Inicialização automática, Inicialização secundária e Executar em segundo plano ativadas.</string>
+    <string name="battery_guide_huawei">Em celulares Huawei / Honor: abra Inicialização de apps (Gerenciador do telefone) › desative Gerenciar automaticamente para o Everywhere e mantenha Inicialização automática, Inicialização secundária e Executar em segundo plano ativadas.</string>
     <string name="battery_guide_pixel">Em celulares Pixel: abra Informações do app › Uso da bateria do app › toque em Permitir uso em segundo plano e selecione Sem restrições.</string>
     <string name="action_manage">Gerenciar</string>
     <string name="action_app_info">Informações do app</string>
@@ -236,12 +237,12 @@
     <string name="hive_invite_text">Mel sobre um fundo grafite ou cor de cera quente, com um favo animado ao fundo. Você pode mudar o tema quando quiser em Configurações.</string>
     <string name="hive_invite_try">Conhecer o Hive</string>
     <string name="hive_invite_dismiss">Agora não</string>
-    <string name="star_channel">Projeto NectarLink</string>
-    <string name="star_title">Está curtindo o NectarLink?</string>
+    <string name="star_channel">Projeto Everywhere</string>
+    <string name="star_title">Está curtindo o Everywhere?</string>
     <string name="star_text">Toque para dar uma estrela no GitHub. Isso ajuda outras pessoas a encontrar o app.</string>
-    <string name="support_title">Apoiar o NectarLink</string>
-    <string name="support_body">O NectarLink é gratuito e de código aberto. Se ele deixa seus dias um pouco mais fáceis, você pode ajudar a mantê-lo. Obrigado!</string>
-    <string name="support_action">Apoiar</string>
+    <string name="support_title">Apoiar o desenvolvedor original do NectarLink</string>
+    <string name="support_body">O Everywhere é baseado no NectarLink. Este apoio vai para o desenvolvedor original do NectarLink. Obrigado!</string>
+    <string name="support_action">Apoiar o NectarLink</string>
     <string name="settings_comb_motion">Favo animado</string>
     <string name="settings_comb_motion_hint">O favo respira e pulsa. Ele fica parado quando Remover animações ou a Economia de bateria estão ativadas.</string>
     <string name="theme_bloom">Bloom</string>
@@ -249,10 +250,10 @@
     <string name="mode_system">Sistema</string>
     <string name="mode_light">Claro</string>
     <string name="mode_dark">Escuro</string>
-    <string name="about_version">NectarLink %1$s</string>
+    <string name="about_version">Everywhere %1$s</string>
     <string name="unpair_title">Desparear %1$s?</string>
     <string name="unpair_text">Os dois dispositivos vão esquecer um ao outro. Você pode pareá-los de novo quando quiser.</string>
-    <string name="core_failed">O NectarLink não conseguiu iniciar: %1$s</string>
+    <string name="core_failed">O Everywhere não conseguiu iniciar: %1$s</string>
 
     <!-- Actions -->
     <string name="action_pair">Parear</string>
@@ -274,21 +275,21 @@
     <string name="action_pair_new">Parear outro PC</string>
     <string name="action_refresh">Atualizar</string>
     <string name="action_update">Atualizar</string>
-    <string name="update_title">O NectarLink %1$s está disponível</string>
+    <string name="update_title">O Everywhere %1$s está disponível</string>
     <string name="update_text">Receba as melhorias e correções mais recentes.</string>
     <string name="update_downloading">Baixando…</string>
     <string name="update_downloading_progress">Baixando · %1$s de %2$s</string>
     <string name="update_waiting_network">Aguardando conexão. O download vai continuar de onde parou.</string>
     <string name="update_installing">Instalando. O Android pode pedir sua confirmação.</string>
-    <string name="update_not_allowed">Permita que o NectarLink instale as atualizações. O processo continua quando você voltar.</string>
+    <string name="update_not_allowed">Permita que o Everywhere instale as atualizações. O processo continua quando você voltar.</string>
     <string name="update_damaged">O arquivo baixado foi corrompido e não foi instalado. Tente de novo.</string>
     <string name="update_offline">Não foi possível baixar a atualização. Tente de novo quando estiver conectado à internet.</string>
     <string name="update_install_failed">O Android não instalou a atualização. Tente de novo.</string>
     <string name="update_whats_new">Novidades</string>
     <string name="update_check">Verificar atualizações</string>
     <string name="update_checking">Verificando atualizações…</string>
-    <string name="update_up_to_date_version">O NectarLink %1$s está atualizado.</string>
-    <string name="update_current_version">Você está com o NectarLink %1$s.</string>
+    <string name="update_up_to_date_version">O Everywhere %1$s está atualizado.</string>
+    <string name="update_current_version">Você está com o Everywhere %1$s.</string>
     <string name="update_check_failed">Não foi possível verificar se há atualizações. Confira sua conexão com a internet.</string>
     <string name="action_lock_pc">Bloquear PC</string>
     <string name="action_sleep_pc">Suspender</string>
@@ -351,7 +352,7 @@
     <string name="settings_quiet_while_using_pc">Silencioso enquanto você usa o PC</string>
     <string name="settings_quiet_while_using_pc_hint">O celular não toca nem vibra com notificações enquanto você usa um PC pareado que as mostra.</string>
     <string name="settings_hide_from_recents">Ocultar dos apps recentes</string>
-    <string name="settings_hide_from_recents_hint">O NectarLink não aparece nos apps recentes, então limpar a lista não o fecha por engano.</string>
+    <string name="settings_hide_from_recents_hint">O Everywhere não aparece nos apps recentes, então limpar a lista não o fecha por engano.</string>
     <string name="settings_touchpad_sensitivity">Velocidade do touchpad</string>
     <string name="settings_touchpad_sensitivity_value">%1$.1f×</string>
     <string name="remote_mode_touchpad">Touchpad</string>
@@ -379,11 +380,11 @@
     <string name="remote_dictate_no_recognizer">Este celular não tem reconhecimento de fala instalado.</string>
     <string name="remote_dictate_no_speech">Não ouvi nada. Toque ou segure Ditar para tentar de novo.</string>
     <string name="remote_dictate_error">O reconhecimento de fala não terminou. Toque ou segure Ditar para tentar de novo.</string>
-    <string name="remote_dictate_permission_needed">O NectarLink precisa de acesso ao microfone para ditar em %1$s.</string>
+    <string name="remote_dictate_permission_needed">O Everywhere precisa de acesso ao microfone para ditar em %1$s.</string>
     <string name="remote_denied_title">Permita o controle em %1$s</string>
-    <string name="remote_denied_text">Em %1$s, permita o controle deste celular no aviso do NectarLink ou em Configurações › Dispositivos.</string>
+    <string name="remote_denied_text">Em %1$s, permita o controle deste celular no aviso do Everywhere ou em Configurações › Dispositivos.</string>
     <string name="remote_offline_text">%1$s não está conectado agora.</string>
-    <string name="remote_unsupported_text">Atualize o NectarLink em %1$s para controlá-lo por este celular.</string>
+    <string name="remote_unsupported_text">Atualize o Everywhere em %1$s para controlá-lo por este celular.</string>
     <string name="remote_slide_next">Próximo slide</string>
     <string name="remote_slide_prev">Anterior</string>
     <string name="remote_slide_start">Iniciar apresentação</string>
@@ -432,7 +433,7 @@
     <string name="recorder_notification_recording">Gravando para %1$s</string>
     <string name="recorder_notification_paused">Gravação pausada (%1$s)</string>
     <string name="recorder_permission_title">Permitir acesso ao microfone</string>
-    <string name="recorder_permission_text">O NectarLink usa o microfone somente enquanto você grava uma nota de voz para enviar a %1$s.</string>
+    <string name="recorder_permission_text">O Everywhere usa o microfone somente enquanto você grava uma nota de voz para enviar a %1$s.</string>
     <string name="recorder_allow_mic">Permitir microfone</string>
     <string name="recorder_offline_hint">As gravações ficam salvas neste celular e são enviadas sozinhas quando %1$s se conectar.</string>
     <string name="recorder_status_ready">Pronto para gravar para %1$s</string>
@@ -464,9 +465,9 @@
     <string name="deck_muted">Silenciado</string>
     <string name="deck_live">Ao vivo</string>
     <string name="deck_volume_percent">%1$d%%</string>
-    <string name="deck_empty_page">Ainda não há botões nesta página. Adicione botões no NectarLink em %1$s.</string>
+    <string name="deck_empty_page">Ainda não há botões nesta página. Adicione botões no Everywhere em %1$s.</string>
     <string name="deck_commands_denied_title">Permitir comandos em %1$s</string>
-    <string name="deck_commands_denied_text">Para executar comandos do shell por este celular, ative “Executar comandos do shell do Deck” para este celular em NectarLink › Configurações › Dispositivos em %1$s.</string>
+    <string name="deck_commands_denied_text">Para executar comandos do shell por este celular, ative “Executar comandos do shell do Deck” para este celular em Everywhere › Configurações › Dispositivos em %1$s.</string>
     <string name="deck_hint">Personalize os botões do Deck em %1$s</string>
     <string name="pc_audio_volume">Volume</string>
     <string name="pc_audio_mute">Silenciar</string>
@@ -506,7 +507,7 @@
     <string name="webcam_request_title">%1$s quer usar sua câmera</string>
     <string name="webcam_request_text">Toque para abrir os controles da webcam e começar a transmitir.</string>
     <string name="webcam_permission_title">Permitir acesso à câmera</string>
-    <string name="webcam_permission_text">O NectarLink usa a câmera somente enquanto você transmite vídeo para %1$s usando o celular como webcam.</string>
+    <string name="webcam_permission_text">O Everywhere usa a câmera somente enquanto você transmite vídeo para %1$s usando o celular como webcam.</string>
     <string name="webcam_allow_camera">Permitir câmera</string>
     <string name="webcam_status_connecting">Conectando a câmera a %1$s…</string>
     <string name="webcam_status_ready">Pronto para transmitir para %1$s</string>
@@ -704,7 +705,7 @@
     <string name="widget_pc_title">Ações rápidas do PC</string>
     <string name="widget_pc_description">Status da conexão, Enviar item copiado, Fazer o PC tocar, Bloquear PC e Acordar para o PC pareado.</string>
     <string name="widget_pc_no_pc">Nenhum PC pareado</string>
-    <string name="widget_pc_tap_to_pair">Toque para abrir o NectarLink e parear um PC</string>
+    <string name="widget_pc_tap_to_pair">Toque para abrir o Everywhere e parear um PC</string>
     <string name="widget_pc_connected">Conectado</string>
     <string name="widget_pc_offline">Desconectado</string>
     <string name="widget_pc_waking">Acordando…</string>
@@ -717,8 +718,8 @@
 
     <!-- Companion Device Manager proximity wake -->
     <string name="companion_wake_title">Ativar quando o PC estiver por perto (dispositivo complementar)</string>
-    <string name="companion_wake_on">Associado · o Android ativa o NectarLink quando seu PC está por perto</string>
-    <string name="companion_wake_off">Associe seu PC para que o Android ative o NectarLink quando o sinal BLE dele estiver ao alcance</string>
+    <string name="companion_wake_on">Associado · o Android ativa o Everywhere quando seu PC está por perto</string>
+    <string name="companion_wake_off">Associe seu PC para que o Android ative o Everywhere quando o sinal BLE dele estiver ao alcance</string>
     <string name="companion_wake_associate">Associar</string>
 
     <!-- Flick to Send sheet -->
@@ -735,9 +736,9 @@
     <string name="pc_files_downloading">Baixando %1$s…</string>
     <string name="pc_files_saved">%1$s salvo em Downloads</string>
     <string name="pc_files_failed">Não foi possível baixar %1$s</string>
-    <string name="pc_files_not_shared">Ative “Seu PC no bolso” em NectarLink › Configurações no %1$s.</string>
+    <string name="pc_files_not_shared">Ative “Seu PC no bolso” em Everywhere › Configurações no %1$s.</string>
     <string name="pc_files_offline">%1$s não está conectado.</string>
-    <string name="pc_files_update">Atualize o NectarLink em %1$s para navegar pelos arquivos dele.</string>
+    <string name="pc_files_update">Atualize o Everywhere em %1$s para navegar pelos arquivos dele.</string>
     <string name="pc_files_not_found">Esta pasta não está mais em %1$s.</string>
     <string name="pc_files_error">Não foi possível listar o conteúdo desta pasta em %1$s. Tente de novo.</string>
     <string name="pc_files_folder_downloads">Downloads</string>
@@ -753,7 +754,7 @@
     <string name="mirror_allow_pc_control">Permitir controle pelo mouse do PC</string>
     <string name="action_open_controls">Controles</string>
     <string name="remote_input_requested_title">Seu PC tentou controlar este celular</string>
-    <string name="remote_input_requested_text">Ative “NectarLink: controle pelo PC” em Acessibilidade para usar o mouse e o teclado do PC neste celular.</string>
+    <string name="remote_input_requested_text">Ative “Everywhere: controle pelo PC” em Acessibilidade para usar o mouse e o teclado do PC neste celular.</string>
     <string name="permissions_setup_title">Permissões e configuração (faltam %1$d)</string>
     <string name="permissions_setup_subtitle">Notificações, chamadas, mensagens, fotos e acesso em segundo plano</string>
     <string name="clipboard_preview_hidden">••••••••••••</string>
@@ -842,10 +843,10 @@
 
     <string name="walkthrough_perm_access_title">Assist</string>
     <string name="walkthrough_perm_access_does">Controle a tela espelhada do celular usando o mouse e o teclado do PC.</string>
-    <string name="walkthrough_perm_access_requires">O Android exige o serviço de Acessibilidade do NectarLink ou o Elevated.</string>
+    <string name="walkthrough_perm_access_requires">O Android exige o serviço de Acessibilidade do Everywhere ou o Elevated.</string>
 
     <string name="walkthrough_pair_title">Parear com o PC</string>
-    <string name="walkthrough_pair_subtitle">Abra o NectarLink no PC. Escaneie o código QR ou escolha seu PC abaixo.</string>
+    <string name="walkthrough_pair_subtitle">Abra o Everywhere no PC. Escaneie o código QR ou escolha seu PC abaixo.</string>
     <string name="walkthrough_pair_ready_title">PC pareado</string>
     <string name="walkthrough_pair_badge_paired">Pareado</string>
     <string name="walkthrough_pair_device_online">%1$s · Conectado</string>
@@ -884,7 +885,7 @@
     <string name="walkthrough_power_elevated_step3">3. Ative a Depuração por Wi-Fi, toque em Parear o dispositivo com um código de pareamento e digite o código de 6 dígitos na notificação.</string>
 
     <string name="walkthrough_done_title">Configuração concluída</string>
-    <string name="walkthrough_done_subtitle">O NectarLink está pronto. Abra este passo a passo de novo quando quiser em Configurações › Sobre.</string>
+    <string name="walkthrough_done_subtitle">O Everywhere está pronto. Abra este passo a passo de novo quando quiser em Configurações › Sobre.</string>
     <string name="walkthrough_done_summary_heading">Sua configuração</string>
     <string name="walkthrough_done_paired_label">PC pareado</string>
     <string name="walkthrough_done_no_pc">Nenhum ainda · pareie quando quiser no Início</string>
@@ -896,7 +897,7 @@
     <string name="walkthrough_done_no_permissions">Nenhuma permissão concedida ainda</string>
     <string name="walkthrough_done_try_heading">Para começar</string>
     <string name="walkthrough_done_try_1">1. Copie um texto e toque em Enviar item copiado para colá-lo no PC.</string>
-    <string name="walkthrough_done_try_2">2. Compartilhe qualquer arquivo ou link com o NectarLink pelo menu Compartilhar do Android.</string>
+    <string name="walkthrough_done_try_2">2. Compartilhe qualquer arquivo ou link com o Everywhere pelo menu Compartilhar do Android.</string>
 
     <!-- Features Guide Chrome -->
     <string name="guide_back">Voltar</string>
@@ -958,12 +959,12 @@
     <string name="guide_notif_summary">Veja as notificações do celular no PC, dispense-as ou responda por lá.</string>
     <string name="guide_notif_where">Configurações › Permissões › Notificações</string>
     <string name="guide_notif_needs">Acesso a notificações e opção Notificações ativada para o PC</string>
-    <string name="guide_notif_need_1">Acesso a notificações do Android ativado para o NectarLink.</string>
+    <string name="guide_notif_need_1">Acesso a notificações do Android ativado para o Everywhere.</string>
     <string name="guide_notif_need_2">No Android 13 ou mais recente, se o app foi instalado por fora de uma loja, ative Permitir configurações restritas em Informações do app.</string>
     <string name="guide_notif_need_3">PC pareado e conectado.</string>
     <string name="guide_notif_phone_1">Abra Configurações › Permissões › Notificações e toque em Permitir.</string>
-    <string name="guide_notif_phone_2">Ative o NectarLink no Acesso a notificações do Android.</string>
-    <string name="guide_notif_pc_1">Veja as notificações do celular na Central de notificações do PC ou na janela do NectarLink.</string>
+    <string name="guide_notif_phone_2">Ative o Everywhere no Acesso a notificações do Android.</string>
+    <string name="guide_notif_pc_1">Veja as notificações do celular na Central de notificações do PC ou na janela do Everywhere.</string>
     <string name="guide_notif_pc_2">Digite uma resposta no cartão e clique em Enviar, ou dispense para limpar nos dois dispositivos.</string>
     <string name="guide_notif_opt_1">Permitir / Gerenciar: abre as configurações de Acesso a notificações do Android.</string>
     <string name="guide_notif_opt_2">Opção Notificações por PC: controla se um PC pareado recebe as notificações.</string>
@@ -1022,7 +1023,7 @@
     <string name="guide_clip_needs">PC pareado; o Elevated é necessário para sincronizar automaticamente a área de transferência do celular com o PC em segundo plano</string>
     <string name="guide_clip_need_1">A sincronização da área de transferência do PC para o celular e o botão Enviar item copiado funcionam sem configuração adicional.</string>
     <string name="guide_clip_need_2">O Elevated adiciona a sincronização automática da área de transferência do celular para o PC.</string>
-    <string name="guide_clip_phone_1">Copie um texto ou uma imagem no celular e abra o NectarLink ou toque em Enviar item copiado.</string>
+    <string name="guide_clip_phone_1">Copie um texto ou uma imagem no celular e abra o Everywhere ou toque em Enviar item copiado.</string>
     <string name="guide_clip_phone_2">Toque em Histórico da área de transferência na tela Início para ver, fixar, copiar ou excluir itens recentes.</string>
     <string name="guide_clip_pc_1">Copie um texto ou uma imagem no PC para enviar à área de transferência do celular.</string>
     <string name="guide_clip_opt_1">Mostrar / Ocultar: esconde ou mostra a prévia do último item copiado na tela Início.</string>
@@ -1054,10 +1055,10 @@
     <string name="guide_files_need_1">PC pareado (se estiver desconectado, os arquivos aguardam na fila de envios por até 7 dias).</string>
     <string name="guide_files_phone_1">Na tela Início, toque em Enviar arquivos ou Enviar uma pasta no cartão do PC pareado.</string>
     <string name="guide_files_phone_2">Pause, retome ou cancele transferências no cartão Transferências da tela Início.</string>
-    <string name="guide_files_pc_1">Arraste arquivos para a janela do NectarLink ou para a Ilha Nectar, no topo da tela do PC.</string>
+    <string name="guide_files_pc_1">Arraste arquivos para a janela do Everywhere ou para a Ilha Nectar, no topo da tela do PC.</string>
     <string name="guide_files_opt_1">Enviar arquivos / Enviar uma pasta: transfere arquivos individuais ou pastas inteiras com seu conteúdo.</string>
     <string name="guide_files_opt_2">Pausar / Retomar: continua transferências interrompidas sem reenviar os dados que já chegaram.</string>
-    <string name="guide_files_privacy">Os arquivos são transferidos por QUIC com TLS 1.3 e verificação de integridade BLAKE3 e salvos em Download/Nectarlink.</string>
+    <string name="guide_files_privacy">Os arquivos são transferidos por QUIC com TLS 1.3 e verificação de integridade BLAKE3 e salvos em Download/Everywhere.</string>
     <string name="guide_files_limits">Até 5.000 arquivos por envio.</string>
 
     <!-- 8. Send queue -->
@@ -1079,7 +1080,7 @@
     <string name="guide_share_where">Menu de compartilhamento do Android › Enviar para PC</string>
     <string name="guide_share_needs">PC pareado</string>
     <string name="guide_share_ext_1">1. Toque em Compartilhar em qualquer navegador, galeria ou app de documentos no celular.</string>
-    <string name="guide_share_ext_2">2. Selecione NectarLink (Enviar para PC ou Abrir no PC).</string>
+    <string name="guide_share_ext_2">2. Selecione Everywhere (Enviar para PC ou Abrir no PC).</string>
     <string name="guide_share_need_1">Pelo menos um PC pareado.</string>
     <string name="guide_share_phone_1">Compartilhe qualquer link ou arquivo pelo menu Compartilhar do Android e escolha o PC de destino.</string>
     <string name="guide_share_pc_1">Os links abrem no navegador padrão do PC; os arquivos são salvos em Downloads.</string>
@@ -1096,7 +1097,7 @@
     <string name="guide_storage_need_2">A opção Explorar o armazenamento deste celular pelo Explorador de Arquivos precisa estar ativada para o PC em Configurações › Dispositivos.</string>
     <string name="guide_storage_phone_1">Permita o acesso a todos os arquivos ou selecione pastas em Configurações › Permissões › Fotos e vídeos.</string>
     <string name="guide_storage_phone_2">Ative o compartilhamento do armazenamento para seu PC em Configurações › Dispositivos.</string>
-    <string name="guide_storage_pc_1">Abra o armazenamento do celular pelo NectarLink ou pelo Explorador de Arquivos do Windows no PC.</string>
+    <string name="guide_storage_pc_1">Abra o armazenamento do celular pelo Everywhere ou pelo Explorador de Arquivos do Windows no PC.</string>
     <string name="guide_storage_opt_1">Acesso a todos os arquivos / Somente pastas selecionadas: compartilhe todo o armazenamento ou apenas as pastas selecionadas pelo seletor do Android.</string>
     <string name="guide_storage_privacy">O acesso ao armazenamento fica desativado para todos os PCs até que você o ative.</string>
     <string name="guide_storage_limits">O Android bloqueia o acesso às pastas privadas dos apps em /Android/data.</string>
@@ -1108,7 +1109,7 @@
     <string name="guide_pc_files_needs">PC pareado e conectado, com o compartilhamento de armazenamento ativado</string>
     <string name="guide_pc_files_need_1">PC pareado e conectado que compartilha as pastas (Seu PC no bolso).</string>
     <string name="guide_pc_files_phone_1">Na tela Início, toque em Explorar arquivos do PC no cartão do PC pareado e toque em um arquivo para baixar.</string>
-    <string name="guide_pc_files_pc_1">Ative Seu PC no bolso nas Configurações do NectarLink no PC.</string>
+    <string name="guide_pc_files_pc_1">Ative Seu PC no bolso nas Configurações do Everywhere no PC.</string>
     <string name="guide_pc_files_opt_1">Tela Explorar arquivos do PC: navegue pelas pastas do PC e baixe arquivos para Downloads.</string>
     <string name="guide_pc_files_privacy">Os arquivos baixados são salvos localmente na pasta Downloads do celular.</string>
     <string name="guide_pc_files_limits">Requer que o PC pareado esteja online.</string>
@@ -1183,7 +1184,7 @@
     <string name="guide_webcam_needs">Permissão da câmera e PC pareado conectado</string>
     <string name="guide_webcam_need_1">Permissão da câmera no Android e um PC pareado conectado.</string>
     <string name="guide_webcam_phone_1">Na tela Início, toque em Webcam no cartão do PC pareado, escolha a resolução e a câmera e toque em Iniciar webcam.</string>
-    <string name="guide_webcam_pc_1">Veja ou grave a transmissão ao vivo da câmera no NectarLink do PC.</string>
+    <string name="guide_webcam_pc_1">Veja ou grave a transmissão ao vivo da câmera no Everywhere do PC.</string>
     <string name="guide_webcam_opt_1">Trocar câmera / Lanterna / Zoom / Resolução (720p, 1080p, 4K): controles da câmera ao vivo.</string>
     <string name="guide_webcam_privacy">A câmera nunca é ativada sem avisar: uma notificação persistente aparece durante a transmissão.</string>
     <string name="guide_webcam_limits">1080p a 60 fps e 4K exigem codificação por hardware e uma conexão Wi-Fi ou USB rápida.</string>
@@ -1195,7 +1196,7 @@
     <string name="guide_continuity_needs">Permissão da câmera e PC pareado conectado</string>
     <string name="guide_continuity_need_1">Permissão da câmera no Android e um PC pareado conectado.</string>
     <string name="guide_continuity_phone_1">Toque na notificação ou no aviso, tire uma foto ou ajuste os cantos do documento e toque em Enviar.</string>
-    <string name="guide_continuity_pc_1">Acione Tirar foto ou Digitalizar documento no NectarLink do PC.</string>
+    <string name="guide_continuity_pc_1">Acione Tirar foto ou Digitalizar documento no Everywhere do PC.</string>
     <string name="guide_continuity_opt_1">Ajustar os cantos / Aprimorar documento: corrige a perspectiva e aumenta o contraste dos documentos digitalizados.</string>
     <string name="guide_continuity_privacy">As capturas só são enviadas quando você toca em Usar foto ou Enviar documento.</string>
     <string name="guide_continuity_limits">Os pedidos de câmera expiram em 2 minutos se ninguém responder.</string>
@@ -1231,7 +1232,7 @@
     <string name="guide_assist_summary">Use o mouse e o teclado do PC para tocar, deslizar e digitar no celular pelo serviço de Acessibilidade.</string>
     <string name="guide_assist_where">Configurações › Permissões › Controle pelo PC › Usar o mouse e o teclado do PC</string>
     <string name="guide_assist_needs">Serviço de acessibilidade ativado</string>
-    <string name="guide_assist_need_1">Serviço de Acessibilidade do NectarLink ativado nas Configurações do Android.</string>
+    <string name="guide_assist_need_1">Serviço de Acessibilidade do Everywhere ativado nas Configurações do Android.</string>
     <string name="guide_assist_phone_1">Abra Configurações › Permissões › Controle pelo PC e toque em Permitir em Usar o mouse e o teclado do PC.</string>
     <string name="guide_assist_pc_1">Clique, arraste, role e digite na janela de espelhamento do celular no PC.</string>
     <string name="guide_assist_opt_1">Parar de digitar: encerra a digitação remota pelo teclado do PC usando o aviso da tela Início.</string>
@@ -1258,7 +1259,7 @@
     <string name="guide_deck_needs">PC pareado e conectado</string>
     <string name="guide_deck_need_1">PC pareado e conectado.</string>
     <string name="guide_deck_phone_1">Na tela Início, toque em Deck no cartão do PC pareado e depois em qualquer botão para executar a ação.</string>
-    <string name="guide_deck_pc_1">Personalize as páginas e os botões do Deck no NectarLink do PC.</string>
+    <string name="guide_deck_pc_1">Personalize as páginas e os botões do Deck no Everywhere do PC.</string>
     <string name="guide_deck_opt_1">Tela inteira: amplia a grade do Deck para ocupar a tela do celular.</string>
     <string name="guide_deck_privacy">Os layouts do Deck e as estatísticas do sistema são compartilhados somente entre este celular e o PC pareado.</string>
     <string name="guide_deck_limits">Botões com comando do shell exigem “Executar comandos do shell do Deck” ativado para este celular no PC.</string>
@@ -1280,7 +1281,7 @@
     <string name="guide_wake_summary">Acorde um PC pareado em suspensão pela rede local com o Wake-on-LAN.</string>
     <string name="guide_wake_where">Início › cartão do PC pareado › Acordar</string>
     <string name="guide_wake_needs">PC pareado com Wake-on-LAN ativado na BIOS e no adaptador de rede</string>
-    <string name="guide_wake_need_1">O PC pareado precisa ter se conectado pela rede local pelo menos uma vez, para o NectarLink aprender o endereço MAC dele.</string>
+    <string name="guide_wake_need_1">O PC pareado precisa ter se conectado pela rede local pelo menos uma vez, para o Everywhere aprender o endereço MAC dele.</string>
     <string name="guide_wake_need_2">Wake-on-LAN ativado nas configurações do adaptador de rede do Windows e na BIOS/UEFI.</string>
     <string name="guide_wake_phone_1">Quando o PC pareado aparecer offline na tela Início, toque em Acordar no cartão dele.</string>
     <string name="guide_wake_pc_1">Ative o despertar por pacote Wake-on-LAN em Gerenciador de Dispositivos › Adaptadores de rede › Gerenciamento de Energia.</string>
@@ -1297,7 +1298,7 @@
     <string name="guide_quick_need_2">Não perturbe e o modo silencioso exigem acesso ao Não perturbe.</string>
     <string name="guide_quick_need_3">O controle de brilho do celular exige a permissão de Brilho da tela ou o Elevated.</string>
     <string name="guide_quick_phone_1">Use Fazer o PC tocar, Bloquear PC ou Suspender no cartão do PC pareado na tela Início ou adicione o widget de ações rápidas do PC.</string>
-    <string name="guide_quick_pc_1">Alterne o Não perturbe, o toque, a lanterna, o volume e o brilho do celular pelo NectarLink no PC.</string>
+    <string name="guide_quick_pc_1">Alterne o Não perturbe, o toque, a lanterna, o volume e o brilho do celular pelo Everywhere no PC.</string>
     <string name="guide_quick_opt_1">Não perturbe / Brilho da tela: conceda as permissões em Configurações › Permissões › Controle pelo PC.</string>
     <string name="guide_quick_privacy">Os comandos são autenticados por dispositivo usando TLS 1.3.</string>
     <string name="guide_quick_limits">Bloquear e suspender o PC podem ser ligados ou desligados para cada celular em Configurações › Dispositivos no PC.</string>
@@ -1325,7 +1326,7 @@
     <string name="guide_doctor_phone_1">Abra Configurações › Permissões › Segundo plano e bateria e permita o uso da bateria sem restrições.</string>
     <string name="guide_doctor_phone_2">Se o fabricante do celular restringe apps em segundo plano, siga o guia de bateria da marca.</string>
     <string name="guide_doctor_pc_1">Abra Diagnóstico de conexão no PC para conferir a latência, as portas e o estado da conexão.</string>
-    <string name="guide_doctor_opt_1">Ativar quando o PC estiver por perto: associa o PC para que o Android ative o NectarLink quando ele estiver ao alcance do BLE.</string>
+    <string name="guide_doctor_opt_1">Ativar quando o PC estiver por perto: associa o PC para que o Android ative o Everywhere quando ele estiver ao alcance do BLE.</string>
     <string name="guide_doctor_privacy">Os diagnósticos rodam localmente entre o celular e o PC pareado.</string>
     <string name="guide_doctor_limits">A economia de bateria de alguns fabricantes precisa ficar em Sem restrições.</string>
     <string name="pair_link_title">Parear com %1$s?</string>
@@ -1335,9 +1336,9 @@
     <string name="pair_link_unknown_pc">este dispositivo</string>
     <string name="data_clear_failed">Não foi possível apagar parte do histórico. Tente de novo.</string>
     <string name="channel_updates">Atualizações</string>
-    <string name="update_ready_title">O NectarLink %1$s está pronto para instalar</string>
+    <string name="update_ready_title">O Everywhere %1$s está pronto para instalar</string>
     <string name="update_ready_text">Toque para instalar a atualização.</string>
-    <string name="update_done_title">O NectarLink foi atualizado para a versão %1$s</string>
+    <string name="update_done_title">O Everywhere foi atualizado para a versão %1$s</string>
     <string name="update_done_text">Toque para abrir. Seus PCs vão se reconectar automaticamente.</string>
     <string name="update_auto_title">Instalar atualizações automaticamente</string>
     <string name="update_auto_text">Novas versões do GitHub são instaladas em segundo plano.</string>
@@ -1351,9 +1352,9 @@
 
     <string name="home_guide_title">Guia</string>
     <string name="home_whats_new_guide">Novidade: Guia de recursos</string>
-    <string name="home_guide_card_body">Explore todos os recursos do NectarLink, confira as permissões ao vivo ou toque em Mostrar para ir direto a qualquer controle.</string>
+    <string name="home_guide_card_body">Explore todos os recursos do Everywhere, confira as permissões ao vivo ou toque em Mostrar para ir direto a qualquer controle.</string>
     <string name="home_no_pc_paired">Nenhum PC pareado ainda</string>
-    <string name="home_no_pc_body">Abra o NectarLink no seu PC com Windows ou Linux para parear por código QR ou pela rede local, ou reabra o passo a passo de configuração.</string>
+    <string name="home_no_pc_body">Abra o Everywhere no seu PC com Windows ou Linux para parear por código QR ou pela rede local, ou reabra o passo a passo de configuração.</string>
     <string name="home_background_clipboard_title">Área de transferência em segundo plano e controle completo</string>
     <string name="home_background_clipboard_body">Sincronize a área de transferência em segundo plano e ative o controle por toque pela Depuração por Wi-Fi.</string>
     <string name="home_section_screen">Tela, câmera e controle</string>
@@ -1386,25 +1387,25 @@
 
     <!-- Pause for banking apps -->
     <string name="banking_title">Pausar para apps bancários</string>
-    <string name="banking_text">Alguns apps bancários não abrem enquanto as Opções do desenvolvedor, a depuração ou um serviço de Acessibilidade estão ativados. Escolha os apps aqui: o NectarLink desativa essas opções enquanto o app bancário estiver aberto e as ativa de novo quando você sair.</string>
+    <string name="banking_text">Alguns apps bancários não abrem enquanto as Opções do desenvolvedor, a depuração ou um serviço de Acessibilidade estão ativados. Escolha os apps aqui: o Everywhere desativa essas opções enquanto o app bancário estiver aberto e as ativa de novo quando você sair.</string>
     <plurals name="banking_chosen">
         <item quantity="one">%1$d app selecionado</item>
         <item quantity="other">%1$d apps selecionados</item>
     </plurals>
-    <string name="banking_needs_elevated">É preciso configurar o Elevated uma vez para que o NectarLink possa mudar essas opções.</string>
-    <string name="banking_needs_usage">Permita o acesso aos dados de uso para que o NectarLink saiba quando um app bancário estiver aberto.</string>
+    <string name="banking_needs_elevated">É preciso configurar o Elevated uma vez para que o Everywhere possa mudar essas opções.</string>
+    <string name="banking_needs_usage">Permita o acesso aos dados de uso para que o Everywhere saiba quando um app bancário estiver aberto.</string>
     <string name="banking_paused_now">Pausado agora para um app bancário.</string>
     <string name="banking_choose">Escolher apps</string>
     <string name="banking_pick_title">Apps bancários</string>
     <string name="banking_search">Buscar apps</string>
     <string name="banking_shortcut">Adicionar atalho</string>
-    <string name="banking_shortcut_hint">Se um app ainda se recusar a abrir, abra pelo atalho dele: o NectarLink pausa primeiro e depois abre o app.</string>
+    <string name="banking_shortcut_hint">Se um app ainda se recusar a abrir, abra pelo atalho dele: o Everywhere pausa primeiro e depois abre o app.</string>
     <string name="banking_channel">Pausar para apps bancários</string>
     <string name="banking_paused_title">Pausado enquanto um app bancário está aberto</string>
-    <string name="banking_paused_text">As Opções do desenvolvedor, a depuração e o serviço de Acessibilidade do NectarLink permanecem desativados até você sair do app bancário.</string>
+    <string name="banking_paused_text">As Opções do desenvolvedor, a depuração e o serviço de Acessibilidade do Everywhere permanecem desativados até você sair do app bancário.</string>
     <string name="banking_turn_back_on">Ativar de novo</string>
     <string name="action_done">Concluído</string>
-    <!-- The phone's name as PCs see it when NectarLink runs in another Android profile: "Pixel 9a (Work)". -->
+    <!-- The phone's name as PCs see it when Everywhere runs in another Android profile: "Pixel 9a (Work)". -->
     <string name="device_name_in_profile">%1$s (%2$s)</string>
     <string name="profile_work">Trabalho</string>
     <string name="profile_other">Segundo perfil</string>

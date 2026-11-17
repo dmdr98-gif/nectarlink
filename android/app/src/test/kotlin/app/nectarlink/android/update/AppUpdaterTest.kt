@@ -36,11 +36,14 @@ class AppUpdaterTest {
 
     private fun feed(channel: String, version: String, files: String): org.json.JSONObject = org.json.JSONObject(
         """{"schema":1,"channel":"$channel","version":"$version","name":"Amber Clover",
-            "notes":"https://github.com/thtbee/nectarlink/releases/tag/v$version","files":[$files]}""",
+            "notes":"https://github.com/dmdr98-gif/nectarlink/releases/tag/v$version","files":[$files]}""",
     )
 
-    private fun apk(version: String, url: String = "https://github.com/thtbee/nectarlink/releases/download/v$version/Nectarlink-$version-android.apk") =
-        """{"name":"Nectarlink-$version-android.apk","url":"$url","sha256":"${"A".repeat(64)}","size":1}"""
+    private fun apk(
+        version: String,
+        name: String = "Everywhere-$version-android.apk",
+        url: String = "https://github.com/dmdr98-gif/nectarlink/releases/download/v$version/$name",
+    ) = """{"name":"$name","url":"$url","sha256":"${"A".repeat(64)}","size":1}"""
 
     @Test
     fun aGoodFeedGivesAnUpdateWithItsHashAndName() {
@@ -49,6 +52,8 @@ class AppUpdaterTest {
         assertEquals("0.1.5-nightly.7", update.version)
         assertEquals("a".repeat(64), update.sha256)
         assertEquals("Amber Clover", update.name)
+        assertEquals("Everywhere-0.1.5-nightly.7-android.apk", update.apkName)
+        assertEquals("https://github.com/dmdr98-gif/nectarlink/releases/tag/v0.1.5-nightly.7", update.notesUrl)
         assertNull(update.sumsUrl)
         // Not newer: nothing to install.
         assertNull(AppUpdater.feedUpdate(checked, "0.1.5-nightly.7"))
@@ -66,11 +71,23 @@ class AppUpdaterTest {
     @Test
     fun filesFromElsewhereAreDropped() {
         val files = listOf(
-            apk("0.1.5", url = "https://evil.example/Nectarlink-0.1.5-android.apk"),
-            apk("0.1.5", url = "https://github.com/thtbee/nectarlink/releases/download/../../x.apk"),
+            apk("0.1.5", url = "https://evil.example/Everywhere-0.1.5-android.apk"),
+            apk("0.1.5", url = "https://github.com/thtbee/nectarlink/releases/download/v0.1.5/Everywhere-0.1.5-android.apk"),
+            apk("0.1.5", url = "https://github.com/dmdr98-gif/nectarlink-other/releases/download/v0.1.5/Everywhere-0.1.5-android.apk"),
+            apk("0.1.5", url = "https://github.com/dmdr98-gif/nectarlink/releases/download/../../x.apk"),
         ).joinToString(",")
         val checked = AppUpdater.checkedFeed(feed("stable", "0.1.5", files), AppUpdater.Channel.Stable)
         assertEquals(0, checked.getJSONArray("files").length())
+        assertNull(AppUpdater.feedUpdate(checked, "0.1.4"))
+    }
+
+    @Test
+    fun onlyEverywhereApksForTheFeedVersionAreOffered() {
+        val files = listOf(
+            apk("0.1.5", name = "Nectarlink-0.1.5-android.apk"),
+            apk("0.1.5", name = "Everywhere-0.1.6-android.apk"),
+        ).joinToString(",")
+        val checked = AppUpdater.checkedFeed(feed("stable", "0.1.5", files), AppUpdater.Channel.Stable)
         assertNull(AppUpdater.feedUpdate(checked, "0.1.4"))
     }
 
@@ -79,14 +96,14 @@ class AppUpdaterTest {
         assertEquals(AppUpdater.Channel.Nightly, AppUpdater.channelOf("0.1.5-nightly.3"))
         assertEquals(AppUpdater.Channel.Stable, AppUpdater.channelOf("0.1.5"))
         assertFalse(AppUpdater.isPlainName("../x.apk"))
-        assertTrue(AppUpdater.isPlainName("Nectarlink-0.1.5-android.apk"))
+        assertTrue(AppUpdater.isPlainName("Everywhere-0.1.5-android.apk"))
     }
 
     @Test
     fun findsTheApkHash() {
         val hash = "a".repeat(64)
-        val sums = "$hash  Nectarlink-9.0.0-android.apk\n${"b".repeat(64)}  Nectarlink-9.0.0-x64-setup.exe\n"
-        assertEquals(hash, AppUpdater.listedHash(sums, "Nectarlink-9.0.0-android.apk"))
+        val sums = "$hash  Everywhere-9.0.0-android.apk\n${"b".repeat(64)}  Everywhere-9.0.0-x64-setup.exe\n"
+        assertEquals(hash, AppUpdater.listedHash(sums, "Everywhere-9.0.0-android.apk"))
         assertNull(AppUpdater.listedHash(sums, "missing.apk"))
         assertEquals("c".repeat(64), AppUpdater.listedHash("${"C".repeat(64)} *x.apk", "x.apk"))
         assertNull(AppUpdater.listedHash("${"z".repeat(64)}  x.apk", "x.apk"))

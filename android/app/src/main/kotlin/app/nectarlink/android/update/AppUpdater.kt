@@ -104,7 +104,7 @@ class AppUpdater(context: Context) {
         data object UpToDate : State
         data class Available(val update: Update) : State
 
-        /** Waiting for the user to let NectarLink install apps; continues when they have. */
+        /** Waiting for the user to let Everywhere install apps; continues when they have. */
         data class NeedsPermission(val update: Update) : State
 
         /** `total` is 0 until the size is known. */
@@ -123,7 +123,7 @@ class AppUpdater(context: Context) {
     /** Whether this build updates itself. */
     val enabled: Boolean get() = !BuildConfig.DEBUG
 
-    private val _autoInstall = MutableStateFlow(prefs.getBoolean(AUTO_INSTALL, true))
+    private val _autoInstall = MutableStateFlow(prefs.getBoolean(AUTO_INSTALL, false))
 
     /** Whether a newer release installs by itself, without asking (Settings). */
     val autoInstall: StateFlow<Boolean> = _autoInstall.asStateFlow()
@@ -174,7 +174,7 @@ class AppUpdater(context: Context) {
 
     /**
      * For the background: checks when due and, with automatic updates on, installs a newer
-     * release. Android 12 and later install it without asking once NectarLink has installed
+     * release. Android 12 and later install it without asking once Everywhere has installed
      * itself before; otherwise a notification asks for one tap.
      */
     suspend fun updateIfDue() {
@@ -310,7 +310,7 @@ class AppUpdater(context: Context) {
         for (i in 0 until assets.length()) {
             val asset = assets.getJSONObject(i)
             val name = asset.getString("name")
-            if (name.endsWith("-android.apk")) apk = asset
+            if (name == "Everywhere-$version-android.apk") apk = asset
             if (name == "SHA256SUMS.txt") sums = asset
         }
         if (apk == null || sums == null) return null
@@ -331,7 +331,7 @@ class AppUpdater(context: Context) {
     /** Whether this app may install apps (the user allows it once, in Settings). */
     fun canInstall(): Boolean = context.packageManager.canRequestPackageInstalls()
 
-    /** Android's screen where the user lets NectarLink install updates. */
+    /** Android's screen where the user lets Everywhere install updates. */
     fun allowInstallsIntent(): Intent =
         Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES, "package:${context.packageName}".toUri())
             .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -372,7 +372,7 @@ class AppUpdater(context: Context) {
                 return
             }
             _state.value = State.Installing(update)
-            withContext(Dispatchers.IO) { runCatching { commit(apk) } }.onFailure {
+            withContext(Dispatchers.IO) { runCatching { commit(apk, automatic) } }.onFailure {
                 Log.w(TAG, "couldn't start the install", it)
                 _state.value = State.Failed(update, Reason.Install)
             }
@@ -394,7 +394,7 @@ class AppUpdater(context: Context) {
             listedHash(sums, update.apkName) ?: throw DamagedException()
         }
         val dir = File(context.cacheDir, UPDATES_DIR).apply { mkdirs() }
-        val name = "nectarlink-${expected.take(16)}.apk"
+        val name = "everywhere-${expected.take(16)}.apk"
         val apk = File(dir, name)
         val part = File(dir, "$name.part")
         dir.listFiles()?.filter { it != apk && it != part }?.forEach { it.deleteRecursively() }
@@ -508,12 +508,14 @@ class AppUpdater(context: Context) {
         _state.value = State.Downloading(update, done, maxOf(total, 0), waitingForNetwork = false)
     }
 
-    private fun commit(apk: File) {
+    private fun commit(apk: File, automatic: Boolean) {
         val installer = context.packageManager.packageInstaller
         val params = PackageInstaller.SessionParams(PackageInstaller.SessionParams.MODE_FULL_INSTALL).apply {
             setAppPackageName(context.packageName)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                setRequireUserAction(PackageInstaller.SessionParams.USER_ACTION_NOT_REQUIRED)
+                setRequireUserAction(
+                    if (automatic) PackageInstaller.SessionParams.USER_ACTION_NOT_REQUIRED else PackageInstaller.SessionParams.USER_ACTION_REQUIRED,
+                )
             }
         }
         val id = installer.createSession(params)
@@ -580,7 +582,7 @@ class AppUpdater(context: Context) {
         Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU ||
             ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED
 
-    /** "NectarLink 0.2.0 is ready", opening Android's install prompt when tapped. */
+    /** "Everywhere 0.2.0 is ready", opening Android's install prompt when tapped. */
     internal fun notifyReady(confirm: Intent) {
         val version = (_state.value as? State.Installing)?.update?.title(context).orEmpty()
         // Return to Available so UpdateCard shows an actionable Update button instead of
@@ -640,14 +642,14 @@ class AppUpdater(context: Context) {
 
     companion object {
         private const val TAG = "AppUpdater"
-        private const val LATEST = "https://api.github.com/repos/thtbee/nectarlink/releases/latest"
+        private const val LATEST = "https://api.github.com/repos/dmdr98-gif/nectarlink/releases/latest"
 
         /** The channels' feeds: `<FEEDS><channel>.json`. */
-        private const val FEEDS = "https://raw.githubusercontent.com/thtbee/nectarlink/channels/"
+        private const val FEEDS = "https://raw.githubusercontent.com/dmdr98-gif/nectarlink/channels/"
 
         /** The only place an update is downloaded from. */
-        private const val RELEASE_DOWNLOADS = "https://github.com/thtbee/nectarlink/releases/download/"
-        private const val NOTES = "https://github.com/thtbee/nectarlink/"
+        private const val RELEASE_DOWNLOADS = "https://github.com/dmdr98-gif/nectarlink/releases/download/"
+        private const val NOTES = "https://github.com/dmdr98-gif/nectarlink/"
         private const val FEED_SCHEMA = 1
         private const val MAX_FEED = 64 * 1024
         private const val UPDATE_CHANNEL = "channel"
@@ -683,7 +685,7 @@ class AppUpdater(context: Context) {
                 // A stalled connection fails soon, so the download resumes on a fresh one.
                 readTimeout = 20_000
                 instanceFollowRedirects = true
-                setRequestProperty("User-Agent", "Nectarlink/${BuildConfig.VERSION_NAME} (Android)")
+                setRequestProperty("User-Agent", "Everywhere/${BuildConfig.VERSION_NAME} (Android)")
                 setRequestProperty("Accept", "application/vnd.github+json, application/octet-stream")
                 if (from > 0) setRequestProperty("Range", "bytes=$from-")
                 if (etag != null && etag.length <= 200 && '\r' !in etag && '\n' !in etag) {
@@ -760,7 +762,7 @@ class AppUpdater(context: Context) {
             if (!isNewer(version, current)) return null
             val files = feed.getJSONArray("files")
             val apk = (0 until files.length()).map { files.getJSONObject(it) }
-                .firstOrNull { it.getString("name").endsWith("-android.apk") && it.getString("name").startsWith("Nectarlink-") }
+                .firstOrNull { it.getString("name") == "Everywhere-$version-android.apk" }
                 ?: return null
             return Update(
                 version = version,

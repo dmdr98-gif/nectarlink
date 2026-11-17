@@ -721,6 +721,7 @@ class Core(context: Context, private val scope: CoroutineScope) : EventListener 
         scope.launch(Dispatchers.IO) {
             try {
                 while (refreshAccessPending.compareAndSet(true, false)) {
+                    Elevated.refreshGrants()
                     val granted = NotificationListener.hasAccess(context)
                     val sensitive = granted && NotificationListener.canReadSensitive(context)
                     val becameSensitive = sensitive && !lastSensitiveAccess
@@ -2076,7 +2077,7 @@ class Core(context: Context, private val scope: CoroutineScope) : EventListener 
             it.pairingJoin(link)
         } catch (e: NectarlinkException) {
             val failure = when (e) {
-                is NectarlinkException.InvalidPairingLink -> PairingFailure.Other("not a NectarLink code")
+                is NectarlinkException.InvalidPairingLink -> PairingFailure.Other("not an Everywhere code")
                 is NectarlinkException.Denied -> PairingFailure.Rejected
                 else -> PairingFailure.Unreachable
             }
@@ -2468,7 +2469,7 @@ class Core(context: Context, private val scope: CoroutineScope) : EventListener 
                     } else {
                         current.outputDevices + app.nectarlink.core.AudioOutputDevice(
                             id = PHONE_SPEAKER_OUTPUT,
-                            name = "Phone speaker (NectarLink)",
+                            name = "Phone speaker (Everywhere)",
                             isDefault = false,
                         )
                     }
@@ -2578,7 +2579,7 @@ class Core(context: Context, private val scope: CoroutineScope) : EventListener 
      * Blocks; call off the main thread.
      */
     fun readWatchFile(pcId: String, offset: Long, length: Long): ByteArray {
-        val running = node ?: throw java.io.IOException("NectarLink isn't running")
+        val running = node ?: throw java.io.IOException("Everywhere isn't running")
         return running.watchFileRead(pcId, offset.toULong(), length.toULong()).data
     }
 

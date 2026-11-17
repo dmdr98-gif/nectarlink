@@ -34,6 +34,7 @@ android {
     ndkVersion = "30.0.16248370"
 
     defaultConfig {
+        // Existing desktop releases validate this ID for USB Elevated setup.
         applicationId = "app.nectarlink"
         minSdk = 26
         targetSdk = 37
@@ -56,7 +57,8 @@ android {
     }
 
     // Release builds are signed with the project's key when CI provides it
-    // (NECTARLINK_KEYSTORE: a .jks file; NECTARLINK_KEYSTORE_PASSWORD).
+    // (NECTARLINK_KEYSTORE: a .jks file; NECTARLINK_KEYSTORE_PASSWORD;
+    // NECTARLINK_KEY_ALIAS: the alias, defaulting to the upstream alias).
     // Without it, a local release build is signed with the debug key so it can be
     // installed over a debug build for testing. Never publish such a build: the
     // release workflow refuses to run without the key and verifies the signature.
@@ -66,7 +68,7 @@ android {
             create("release") {
                 storeFile = keystore
                 storePassword = System.getenv("NECTARLINK_KEYSTORE_PASSWORD")
-                keyAlias = "nectarlink"
+                keyAlias = System.getenv("NECTARLINK_KEY_ALIAS") ?: "nectarlink"
                 keyPassword = System.getenv("NECTARLINK_KEYSTORE_PASSWORD")
             }
         }

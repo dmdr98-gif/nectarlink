@@ -19,6 +19,7 @@ import android.view.WindowManager
 import androidx.core.content.edit
 import app.nectarlink.android.banking.BankingPause
 import app.nectarlink.android.calls.CallCompanion
+import app.nectarlink.android.calls.PhoneCalls
 import app.nectarlink.android.notifications.NotificationListener
 import app.nectarlink.core.MirrorInputEvent
 import app.nectarlink.core.TouchPhase
@@ -311,7 +312,7 @@ object Elevated {
 
         override fun getPrivateKey() = key.privateKey
         override fun getCertificate() = key.certificate
-        override fun getDeviceName() = "Nectarlink"
+        override fun getDeviceName() = "Everywhere"
     }
 
     // ---- Pairing ----
@@ -627,41 +628,41 @@ object Elevated {
         }.onFailure { Log.i(TAG, "can't turn on wireless debugging", it) }
     }
 
-    /** What the shell grants NectarLink once, before the helper starts (however it starts). */
-    private fun grants(): List<String> = buildList {
+    /** Grants only for the features the user has already enabled. */
+    private fun grants(): List<String> {
         val pkg = context.packageName
-        // Turning wireless debugging back on later is NectarLink's to do.
-        if (context.checkSelfPermission(Manifest.permission.WRITE_SECURE_SETTINGS) != PackageManager.PERMISSION_GRANTED) {
-            add("pm grant $pkg ${Manifest.permission.WRITE_SECURE_SETTINGS}")
-        }
-        // Lets Telecom bind the calling companion: mute, speaker, hold and
-        // the keypad from a PC.
-        if (!CallCompanion.allowed(context) && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            add("appops set $pkg ${CallCompanion.OP_NAME} allow")
-        }
-        // Lets the notification listener read one-time codes in notifications
-        // Android 15+ marks sensitive, and refreshes the listener registration
-        // so NotificationManagerService updates its trusted-listener UID set.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.VANILLA_ICE_CREAM) {
-            if (!NotificationListener.canReadSensitive(context)) {
-                add("appops set $pkg ${NotificationListener.OP_SENSITIVE_NAME} allow")
+        val consent = ElevatedGrantPolicy.Consent(
+            wirelessPaired = paired(),
+            callControl = PhoneCalls.canControl(context),
+            notificationAccess = NotificationListener.hasAccess(context),
+            bankingApps = BankingPause.apps(context).isNotEmpty(),
+        )
+        return ElevatedGrantPolicy.commands(pkg, Build.VERSION.SDK_INT, consent).filter { command ->
+            when (command) {
+                "pm grant $pkg ${ElevatedGrantPolicy.SECURE_SETTINGS}" ->
+                    context.checkSelfPermission(Manifest.permission.WRITE_SECURE_SETTINGS) != PackageManager.PERMISSION_GRANTED
+                "appops set $pkg ${ElevatedGrantPolicy.CALLS} allow" -> !CallCompanion.allowed(context)
+                "appops set $pkg ${ElevatedGrantPolicy.SENSITIVE_NOTIFICATIONS} allow" -> !NotificationListener.canReadSensitive(context)
+                "appops set $pkg ${ElevatedGrantPolicy.USAGE_STATS} allow" -> !BankingPause.hasUsageAccess(context)
+                // Refreshing an already enabled listener updates Android's trusted UID set.
+                else -> true
             }
-            if (NotificationListener.hasAccess(context)) {
-                add("cmd notification allow_listener $pkg/${NotificationListener::class.java.name}")
-            }
-        }
-        // Lets PCs toggle Do Not Disturb / silent mode and screen brightness without extra prompts.
-        if (context.getSystemService(android.app.NotificationManager::class.java)?.isNotificationPolicyAccessGranted == false) {
-            add("cmd notification allow_dnd $pkg")
-        }
-        if (!Settings.System.canWrite(context)) {
-            add("appops set $pkg WRITE_SETTINGS allow")
-        }
-        // Pause for banking apps sees which app is in front; only for those using it.
-        if (BankingPause.apps(context).isNotEmpty() && !BankingPause.hasUsageAccess(context)) {
-            add("appops set $pkg GET_USAGE_STATS allow")
         }
     }
+
+    /** Reconcile permissions enabled after the helper started, including direct USB attachment. */
+    fun refreshGrants() {
+        val writer = input ?: return
+        offMain.execute {
+            if (input !== writer) return@execute
+            // Successful grants and revoked feature consent leave the set, so
+            // a later explicit re-enable can request them again. Failed grants
+            // stay in it to avoid a shell-error/permission-refresh loop.
+            requestedGrants.next(grants()).forEach { command -> sendNow(writer, "C $command") }
+        }
+    }
+
+    private val requestedGrants = ElevatedGrantRequests()
 
     private fun launch(adb: Connection) {
         grants().forEach { run(adb, it) }
@@ -697,6 +698,8 @@ object Elevated {
         writer.write("$token\nH\n")
         writer.flush()
         input = writer
+        requestedGrants.clear()
+        refreshGrants()
         _state.value = State.Running
         if (screenOffRequested) send(writer, "P 0")
         compileIfUpdated()
@@ -705,6 +708,7 @@ object Elevated {
             runCatching {
                 local.inputStream.bufferedReader().lineSequence().forEach { line ->
                     if (line == "BLOCKED") onInputBlocked()
+                    if (line == "GRANTS_CHANGED") onChange()
                     if (line.startsWith("CLIP\t")) {
                         val parts = line.split('\t')
                         val b64Text = parts.getOrNull(1).orEmpty()
@@ -1063,7 +1067,16 @@ object Elevated {
     }
 
     /** Lets NectarLink see which app is in front (for Pause for banking apps); false if Elevated isn't running. */
-    fun grantUsageAccess(): Boolean = runCommand("appops set ${context.packageName} GET_USAGE_STATS allow")
+    fun grantUsageAccess(): Boolean {
+        if (BankingPause.apps(context).isEmpty() || !running) return false
+        // The user pressed Allow (or picked apps): retry a previously failed grant.
+        requestedGrants.retry(listOf(
+            "pm grant ${context.packageName} ${ElevatedGrantPolicy.SECURE_SETTINGS}",
+            "appops set ${context.packageName} ${ElevatedGrantPolicy.USAGE_STATS} allow",
+        ))
+        refreshGrants()
+        return true
+    }
 
     /** Runs an allowed shell command through the Elevated helper. */
     fun runCommand(command: String): Boolean {

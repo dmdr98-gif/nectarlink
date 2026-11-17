@@ -1512,6 +1512,11 @@ private fun ElevatedAccess() {
                 Elevated.State.Starting -> {}
             }
         }
+        Text(
+            stringResource(R.string.elevated_permissions_notice),
+            style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
         if (state == Elevated.State.Waiting || state is Elevated.State.Failed) {
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 if (viaShizuku && shizukuInstalled) {

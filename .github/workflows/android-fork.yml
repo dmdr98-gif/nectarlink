@@ -1,0 +1,98 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+name: Everywhere Android
+
+on:
+  push:
+    branches: ["fix/android-*"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: everywhere-android-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  CARGO_TERM_COLOR: always
+  EVERYWHERE_SIGNER_SHA256: 437d57e619bc3c3ab3385df8c17d555087b7c04370a0e96b5520841488c57306
+
+jobs:
+  android:
+    name: Signed APK and Android checks (arm64)
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v7
+      - name: Install Rust and the phone target
+        run: |
+          rustup show active-toolchain || rustup toolchain install
+          rustup target add aarch64-linux-android
+      - uses: Swatinem/rust-cache@v2
+        with:
+          shared-key: everywhere-android-arm64
+      - name: Install cargo-ndk
+        run: cargo install --locked cargo-ndk
+      - uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: "21"
+      - uses: android-actions/setup-android@v4
+        with:
+          cmdline-tools-version: "16111833"
+          packages: "platforms;android-37.0 ndk;30.0.16248370 build-tools;37.0.0"
+      - uses: gradle/actions/setup-gradle@v6
+      - name: Prepare the fork signing key
+        env:
+          KEYSTORE: ${{ secrets.ANDROID_KEYSTORE }}
+          KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+        run: |
+          test -n "$KEYSTORE"
+          test -n "$KEYSTORE_PASSWORD"
+          umask 077
+          printf '%s' "$KEYSTORE" | base64 -d > "$RUNNER_TEMP/everywhere-release.jks"
+      - name: Test, lint and build
+        working-directory: android
+        env:
+          NECTARLINK_KEYSTORE: ${{ runner.temp }}/everywhere-release.jks
+          NECTARLINK_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          NECTARLINK_KEY_ALIAS: everywhere
+        run: ./gradlew --no-daemon :app:testDebugUnitTest :app:lintRelease :app:assembleRelease -Pnectarlink.abis=arm64-v8a
+      - name: Verify the release APK
+        run: |
+          apk=android/app/build/outputs/apk/release/app-release.apk
+          "$ANDROID_HOME/build-tools/37.0.0/apksigner" verify --verbose --print-certs "$apk" | tee "$RUNNER_TEMP/everywhere-signature.txt"
+          grep -Fq "Signer #1 certificate SHA-256 digest: $EVERYWHERE_SIGNER_SHA256" "$RUNNER_TEMP/everywhere-signature.txt"
+          "$ANDROID_HOME/build-tools/37.0.0/zipalign" -c -P 16 -v 4 "$apk"
+          "$ANDROID_HOME/build-tools/37.0.0/aapt2" dump badging "$apk" > "$RUNNER_TEMP/everywhere-badging.txt"
+          grep -Fq "package: name='app.nectarlink'" "$RUNNER_TEMP/everywhere-badging.txt"
+          grep '^native-code:' "$RUNNER_TEMP/everywhere-badging.txt" | grep -Fq "'arm64-v8a'"
+          if grep -q '^application-debuggable' "$RUNNER_TEMP/everywhere-badging.txt"; then
+            echo '::error::the release APK is debuggable'
+            exit 1
+          fi
+          version=$(python3 -c 'import tomllib; print(tomllib.load(open("Cargo.toml", "rb"))["workspace"]["package"]["version"])')
+          mkdir -p out
+          cp "$apk" "out/Everywhere-${version}-android.apk"
+          (cd out && sha256sum *.apk > SHA256SUMS.txt)
+          printf 'Repository: %s\nCommit: %s\nRun: %s/%s/actions/runs/%s\n' \
+            "$GITHUB_REPOSITORY" "$GITHUB_SHA" "$GITHUB_SERVER_URL" "$GITHUB_REPOSITORY" "$GITHUB_RUN_ID" > out/SOURCE.txt
+      - name: Forget the signing key
+        if: always()
+        run: rm -f "$RUNNER_TEMP/everywhere-release.jks"
+      - uses: actions/upload-artifact@v7
+        with:
+          name: Everywhere-android-arm64
+          path: out/*
+          if-no-files-found: error
+          retention-days: 30
+      - name: Keep check reports
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: Everywhere-android-checks
+          path: |
+            android/app/build/reports/tests/
+            android/app/build/reports/lint-results-release.*
+          if-no-files-found: ignore
+          retention-days: 14

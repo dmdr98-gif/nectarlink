@@ -24,9 +24,9 @@ internal object StarNotification {
     private const val CHANNEL = "project"
     private const val ID = 0x5A7A
     private const val HOUR_MS = 60 * 60 * 1000L
-    private const val REPO = "https://github.com/thtbee/nectarlink"
+    private const val REPO = "https://github.com/dmdr98-gif/nectarlink"
 
-    /** Where the Support buttons go: the project's tip page. */
+    /** Support goes to NectarLink's original developer, as the UI explains. */
     const val SUPPORT = "https://buymeacoffee.com/thtbee_"
 
     fun supportIntent(context: Context): PendingIntent = PendingIntent.getActivity(

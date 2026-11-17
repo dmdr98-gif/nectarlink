@@ -241,7 +241,7 @@ object PhoneClipboard {
         if (app.nectarlink.android.elevated.Elevated.setClipboard(text, null, sensitive = true)) {
             return@runCatching true
         }
-        val clip = ClipData.newPlainText("Nectarlink", text)
+        val clip = ClipData.newPlainText("Everywhere", text)
         clip.description.extras = android.os.PersistableBundle().apply {
             putBoolean("com.android.systemui.SUPPRESS_CLIPBOARD_OVERLAY", true)
             putBoolean("android.content.extra.IS_REMOTE_DEVICE", true)
@@ -265,7 +265,7 @@ object PhoneClipboard {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
                 mgr.clearPrimaryClip()
             } else {
-                mgr.setPrimaryClip(ClipData.newPlainText("Nectarlink", ""))
+                mgr.setPrimaryClip(ClipData.newPlainText("Everywhere", ""))
             }
         }
     }
@@ -290,9 +290,9 @@ object PhoneClipboard {
         // The shell's copy can ask SystemUI not to show it; the app's can't.
         if (app.nectarlink.android.elevated.Elevated.setClipboard(text, cleanHtml)) return@runCatching true
         val clip = if (cleanHtml != null) {
-            ClipData.newHtmlText("Nectarlink", text, cleanHtml)
+            ClipData.newHtmlText("Everywhere", text, cleanHtml)
         } else {
-            ClipData.newPlainText("Nectarlink", text)
+            ClipData.newPlainText("Everywhere", text)
         }
         runCatching {
             val extras = (clip.description.extras ?: android.os.PersistableBundle()).apply {
@@ -323,7 +323,7 @@ object PhoneClipboard {
         lastWrittenText = uri.toString()
         lastWrittenHtml = null
         lastWrittenAtMs = android.os.SystemClock.elapsedRealtime()
-        val clip = ClipData.newUri(context.contentResolver, "Nectarlink", uri)
+        val clip = ClipData.newUri(context.contentResolver, "Everywhere", uri)
         manager(context)?.setPrimaryClip(clip) != null
     }.getOrElse {
         Log.w(TAG, "can't put an image on the clipboard", it)
@@ -335,14 +335,14 @@ object PhoneClipboard {
      * immediately paste it into chat or email apps, while recording the URI to suppress
      * clipboard echo back to the PC.
      */
-    fun setFileUri(context: Context, uri: Uri, label: String = "NectarLink file"): Boolean = runCatching {
+    fun setFileUri(context: Context, uri: Uri, label: String = "Everywhere file"): Boolean = runCatching {
         appContext = context.applicationContext
         lastWrittenUri = uri
         lastWrittenText = uri.toString()
         lastWrittenHtml = null
         lastWrittenAtMs = android.os.SystemClock.elapsedRealtime()
         val mgr = manager(context) ?: return false
-        val clip = ClipData.newUri(context.contentResolver, label.ifBlank { "NectarLink file" }, uri)
+        val clip = ClipData.newUri(context.contentResolver, label.ifBlank { "Everywhere file" }, uri)
         mgr.setPrimaryClip(clip)
         true
     }.getOrElse {
@@ -351,7 +351,7 @@ object PhoneClipboard {
     }
 
     /** Overload using the cached application [Context] when available. */
-    fun setFileUri(uri: Uri, label: String = "NectarLink file"): Boolean {
+    fun setFileUri(uri: Uri, label: String = "Everywhere file"): Boolean {
         val ctx = appContext ?: return false
         return setFileUri(ctx, uri, label)
     }

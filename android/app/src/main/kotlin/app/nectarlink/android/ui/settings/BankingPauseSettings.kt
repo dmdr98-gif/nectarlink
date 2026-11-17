@@ -68,15 +68,15 @@ internal fun BankingPauseAccess() {
     val paused by BankingPause.paused.collectAsStateWithLifecycle()
 
     fun refreshUsageAccess() {
+        canChange = BankingPause.canChangeSettings(context)
         usage = BankingPause.hasUsageAccess(context)
-        if (!usage) {
+        if (!usage || !canChange) {
             scope.launch {
                 repeat(10) {
                     delay(100)
-                    if (BankingPause.hasUsageAccess(context)) {
-                        usage = true
-                        return@launch
-                    }
+                    canChange = BankingPause.canChangeSettings(context)
+                    usage = BankingPause.hasUsageAccess(context)
+                    if (usage && canChange) return@launch
                 }
             }
         }
@@ -151,7 +151,7 @@ internal fun BankingPauseAccess() {
                 BankingPause.setApps(context, picked)
                 chosen = picked
                 // Elevated can let NectarLink see the app in front right away.
-                if (picked.isNotEmpty() && !BankingPause.hasUsageAccess(context)) {
+                if (picked.isNotEmpty() && (!BankingPause.hasUsageAccess(context) || !BankingPause.canChangeSettings(context))) {
                     Elevated.grantUsageAccess()
                     refreshUsageAccess()
                 }
